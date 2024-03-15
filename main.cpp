@@ -3,87 +3,36 @@
 #include <string>
 using namespace std;
 
-/*int main()
-{   
-    // Open cipher text file to read and plain text file to write to
-    ifstream inputFile("cipher.txt");
-    ofstream outputFile("plaintext.txt");
-
-    if (inputFile.is_open())
-    {
-        string line;
-
-        //reads each line of cipher text file
-        while(getline(inputFile, line))
-        {   
-            // for loop to attempt 1-25 shift keys
-            for(int key = 1; key < 26; key++)
-            {   
-                // variable to modify original line only
-                string original = line;
-
-                // for loop to iterate through line
-                for(int i = 0; i < original.length(); i++)
-                {
-                    char& c = original[i];
-                    // condition to check if char is uppercase
-                    if (c >= 'A' && c <= 'Z')
-                    {   
-                        // decryption algorithm that shifts char value to the LEFT 
-                        int val = c - 'A';
-                        val = (val - key + 26) % 26;
-                        c = 'A' + val;
-                    }
-                    // condition to check if char is lowercase
-                    else if ( c >= 'a' && c <= 'z')
-                    {
-                        // decryption algorithm that shifts char value to the LEFT
-                        int val = c - 'a';
-                        val = (val - key + 26) % 26;
-                        c = 'a' + val;      
-                    }
-                }
-                // outputs modified line with current shift to output file
-                outputFile << "Shift is: " << key << endl << original << endl;
-            }
-        }
-        // close files 
-        inputFile.close();
-        outputFile.close();
-    }
-
-    // condition if there is an issue with opening the inputFile
-    else
-    {
-        cout << "Error opening file" << endl;
-    }
-
-    return 0;
-}*/
-
-string decrypt_algorithm(const string& line, int key)
+// function for decryption algorithm given a string line and shift value
+string algorithm(const string& line, int shift)
 {
     string original = line;
+    // for loop to iterate through line characters
     for(int i = 0; i < original.length(); i++)
     {
         char& c = original[i];
+        // condition if character value is uppercase 
         if (c >= 'A' && c <= 'Z')
         {
+            // algorithm used to shift character value by shift value to the LEFT
             int val = c - 'A';
-            val = (val - key + 26) % 26;
+            val = (val - shift + 26) % 26;
             c = 'A' + val;
         }
+        // condition if character value is lowercase
         else if (c >= 'a' && c <= 'z')
         {
+            // algorithm used to shift character value by shift value to the LEFT
             int val = c - 'a';
-            val = (val - key + 26) % 26;
+            val = (val - shift + 26) % 26;
             c = 'a' + val;
         }
     }
     return original;
 }
 
-void decrypt_file(const string& iFile, const string& oFile)
+// function to decrypt input file and output the plain text to an output file 
+void decryptFile(const string& iFile, const string& oFile)
 {
     ifstream inputFile(iFile);
     ofstream outputFile(oFile);
@@ -91,18 +40,21 @@ void decrypt_file(const string& iFile, const string& oFile)
     if (inputFile.is_open())
     {
         string line;
+        // while loop to read each line of the input file 
         while(getline(inputFile, line))
         {
-            for (int key = 1; key < 26; key++)
+            // for loop to implement shift values 1-25 into the decryption algorithm for encrypted string
+            for (int shift = 1; shift < 26; shift++)
             {
-                string original = decrypt_algorithm(line, key);
-                outputFile << "Shift is: " << key << endl << original << endl;
+                string original = algorithm(line, shift);
+
+                // output each shift iteration with shift value and modified string
+                outputFile << "Shift is: " << shift << endl << original << endl;
             }
         }
         inputFile.close();
         outputFile.close();
     }
-
     else
     {
         cout << "Error opening file" << endl;
@@ -111,7 +63,8 @@ void decrypt_file(const string& iFile, const string& oFile)
 }
 
 int main()
-{
-    decrypt_file("cipher.txt", "plaintext.txt");
+{   
+    // call function to decrypt cipher text file and output to plain text file
+    decryptFile("cipher.txt", "plaintext.txt");
     return 0;
 }
