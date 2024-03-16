@@ -43,7 +43,7 @@ void decryptFile(const string& iFile, const string& oFile)
         // while loop to read each line of the input file 
         while(getline(inputFile, line))
         {
-            // for loop to implement shift values 1-25 into the decryption algorithm for encrypted string
+            // for loop to implement shift values 1-25 into the decryption algorithm function
             for (int shift = 1; shift < 26; shift++)
             {
                 string original = algorithm(line, shift);
@@ -52,9 +52,11 @@ void decryptFile(const string& iFile, const string& oFile)
                 outputFile << "Shift is: " << shift << endl << original << endl;
             }
         }
+        // close files
         inputFile.close();
         outputFile.close();
     }
+    // condition if file does not open
     else
     {
         cout << "Error opening file" << endl;
