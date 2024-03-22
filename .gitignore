@@ -1,0 +1,27 @@
+# Ignore object files and executables
+*.o
+*.out
+*.exe
+main
+
+# Ignore build directories
+build/
+bin/
+
+# Ignore generated files
+CMakeLists.txt.user
+.vscode/
+.idea/
+
+# Ignore any backup files created by editors
+*~
+
+# Ignore compiled files
+*.a
+*.so
+
+# Ignore cmake cache and build files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
